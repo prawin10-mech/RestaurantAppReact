@@ -31,11 +31,13 @@ const DUMMY_MEALS = [
 
 const AvailableMeals = () => {
   const MealsData = DUMMY_MEALS.map((meal) => (
-    <MealItem
-      name={meal.name}
-      description={meal.description}
-      price={meal.price}
-    />
+    <div>
+      <MealItem
+        name={meal.name}
+        description={meal.description}
+        price={meal.price}
+      />
+    </div>
   ));
   return (
     <Card>
