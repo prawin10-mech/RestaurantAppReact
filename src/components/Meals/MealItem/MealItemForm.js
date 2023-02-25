@@ -1,24 +1,32 @@
 import classes from "./MealItemForm.module.css";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import CartContext from "../../../store/cart-context";
+import Input from "../../UI/Input";
 
-const MealItemForm = () => {
-  const [amountInput, setAmountInput] = useState(1);
-  const amountChangeHandle = (event) => {
-    setAmountInput(event.target.value);
+const MealItemForm = (props) => {
+  const cartCtx = useContext(CartContext);
+
+  const itemAddHandle = () => {
+    // cartCtx.items.push(props.item, quantity: );
+    const quantity = document.getElementById("amount_" + props.id).value;
+    cartCtx.addItem({ ...props.item, quantity: quantity });
   };
   return (
-    <form className={classes.form}>
-      <label htmlFor="amount">Amount: </label>
-      <input
-        type="number"
-        name="amount"
-        id="amount"
-        value={amountInput}
-        min="0"
-        onChange={amountChangeHandle}
+    <form className={classes.form} key={props.id}>
+      <Input
+        label="Amount"
+        input={{
+          type: Number,
+          id: "amount_" + props.id,
+          min: "1",
+          max: "5",
+          step: "1",
+          defaultValue: "1",
+        }}
       />
-      <br />
-      <button type="button">+Add</button>
+      <button type="button" onClick={itemAddHandle}>
+        +Add
+      </button>
     </form>
   );
 };
