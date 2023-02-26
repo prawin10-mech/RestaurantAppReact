@@ -19,6 +19,11 @@
   text-align: right;
 }
 
+li {
+  display: flex;
+  justify-content: space-between;
+}
+
 .actions button {
   font: inherit;
   cursor: pointer;
@@ -43,4 +48,13 @@
 .actions .button {
   background-color: #8a2b06;
   color: white;
+}
+
+.quantityDetails {
+  display: flex;
+}
+
+.quantityDetails > p {
+  margin-right: 20px;
+  color: orange;
 }

@@ -2,27 +2,37 @@ import Modal from "../UI/Modal";
 import classes from "./Cart.module.css";
 import CartContext from "../../store/cart-context";
 import { useContext } from "react";
+import CartItem from "./CartItem";
 
 const Cart = (props) => {
   const cartCtx = useContext(CartContext);
+  const total = `${cartCtx.totalAmount.toFixed(2)}`;
+
+  const CartItemAddHandler = (item) => {
+    cartCtx.addItem({ ...item, quantity: 1 });
+  };
+  const CartItemRemoveHandler = (id) => {
+    console.log(id);
+    cartCtx.removeItem(id);
+  };
   const CartItems = (
     <ul className={classes["cart-items"]}>
-      {cartCtx.items.map((item) => (
-        <li>
-          <h3>
-            Name: {item.name} | Price:{item.price} | Quantity: {item.quantity}
-          </h3>
-        </li>
-      ))}
+      {cartCtx.items.map((item) => {
+        return (
+          <CartItem
+            name={item.name}
+            key={item.id}
+            quantity={item.quantity}
+            price={item.price}
+            onAdd={CartItemAddHandler.bind(null, item)}
+            onRemove={CartItemRemoveHandler.bind(null, item.id)}
+          />
+        );
+      })}
     </ul>
   );
 
-  let total = 0;
-  cartCtx.items.map((item) => {
-    total += +item.quantity * +item.price;
-  });
-
-  console.log(cartCtx.items);
+  console.log(CartItems);
   return (
     <Modal onClose={props.onClose}>
       {CartItems}
